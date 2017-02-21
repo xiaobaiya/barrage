@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>弹幕效果</title>
+    <style>
+        *{
+            margin: 0;
+            padding: 0;
+        }
+        #container{
+            width: 800px;
+            height: 498px;
+            margin: 0 auto;
+            position: relative;
+
+        }
+        #content{
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 800px;
+            height: 498px;
+            overflow: hidden;
+        }
+        #content span{
+            position: absolute;
+            left: 800px;
+            color: red;
+            font-size: 16px;
+            transition: all 3s;
+            transition-timing-function: linear;/*控制速度*/
+        }
+        ul{
+            position: absolute;
+            top: 0;
+            left: 800px;
+            width: 100px;
+            height: 800px;
+            overflow: auto;
+        }
+        ul li{
+            list-style: none;
+            font-size: 12px;
+        }
+        
+    </style>
+    <script src="jquery-3.1.1.min.js"></script>
+</head>
+<body>
+<div id="container">
+    <img src="about-1.png">
+    <div id="content"></div>
+    <ul>
+        <li>第一条弹幕</li>
+    </ul>
+</div>
+
+<input type="text" value="你好，弹幕" id="input" placeholder="在此输入弹幕">
+<button type="button" onclick="val()">点击</button>
+<button type="button" onclick="move()"> 弹幕跑动</button>
+
+<script>
+
+    var con = document.getElementById('container');
+    var content = document.getElementById('content');
+    var input = document.getElementById('input');
+    function move(){
+        var v = input.value;//设置局部变量覆盖全局变量，从而获取当前的输入值
+        var span = document.createElement('span');
+        console.log(v.length);
+        span.innerText = v;
+        span.style.width = v.length * 16 +'px';
+        span.style.top = parseInt(Math.random()*498) + 'px';
+        content.appendChild(span);
+        setTimeout(function(){
+            span.style.left = - v.length * 16 +'px';
+            setTimeout(function () {
+                span.remove();
+            },3000)
+        },300)
+        val();
+    }
+    
+    function val(){
+        var v = input.value;//设置局部变量覆盖全局变量，从而获取当前的输入值
+        var ul = document.getElementsByTagName('ul')[0];
+        var li = document.createElement('li');
+        li.innerText = v;
+        ul.appendChild(li);
+    }
+//
+//        $('button').eq(1).click(function () {
+//            $('li').each().clone().css('left','0');
+//        })
+
+
+</script>
+</body>
+</html>
